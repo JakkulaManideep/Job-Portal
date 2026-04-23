@@ -1,96 +1,159 @@
-# 💼 **JobJunction – Full Stack Job Portal Website** 🌐
+# Job Portal (MERN, Free-Tier Ready)
 
-## 💡 **Description**
+This repository contains a refactored MERN job portal split into two apps:
 
-**JobJunction** is a robust **MERN Stack** job portal website that allows users to seamlessly browse job listings, post their own job opportunities, and apply for jobs. The platform offers secure user authentication, either through email, password, or Google login using Firebase Authentication. Users can filter job listings by title, location, and posting time, ensuring efficient job discovery. With features like job posting management, pagination, and a sleek UI, **JobJunction** guarantees an exceptional user experience, making job searching and management easier and more accessible.
+- `job-portal-client` -> React + Vite frontend
+- `job-portal-server` -> Node + Express + Mongoose backend
 
-This full-stack web application is designed to bridge the gap between job seekers and employers with a comprehensive set of features that support both job applicants and administrators.
+The stack is optimized for **zero-cost student/portfolio deployment**:
 
-## 🚀 **Features**
+- Database: MongoDB Atlas Free tier (M0)
+- Backend: Render Free Web Service
+- Frontend: Vercel Hobby
+- Auth: Clerk (role-based)
 
-### 👤 **User Features**
-* **🔑 Login:** Allows registered users to securely access their accounts using email and password.
-* **📧 Google Login:** Provides the option to log in using Google, powered by Firebase Authentication for easy access.
-* **📝 Signup:** Enables new users to create accounts by providing necessary registration details like email and password.
-* **🍽️ Job Listings:** Browse a wide range of job opportunities, with job details such as title, location, posting time, and descriptions.
-* **🔍 Job Filters:** Refine job searches by title, location, and posting time for efficient job discovery.
-* **💼 Post & Manage Listings:** Registered users can seamlessly create, edit, and manage their job listings, giving them full control over their content.
-* **🗂️ Pagination:** Job listings are organized with pagination to manage search results and enhance user navigation experience.
+## 1) Project Structure
 
-### 🧑‍💼 **Admin Features**
-* **🔑 Admin Login:** Grants access to the admin panel, where administrators can manage the platform.
-* **📝 Job Management:** Admins can update, delete, and manage job listings on the portal.
-* **👥 User Management:** Admins can monitor registered users, handle queries, and ensure smooth user operations.
-* **🛠️ Content Moderation:** Admins have the ability to moderate user-submitted content and ensure it adheres to platform guidelines.
-* **📊 Analytics & Reporting:** Admins can view and generate reports on platform usage, job applications, and other key metrics.
+```text
+Job-Portal/
+  job-portal-client/
+    src/
+      api/
+      components/
+      hooks/
+      pages/
+      utils/
+      Router/
+  job-portal-server/
+    src/
+      config/
+      controllers/
+      middleware/
+      models/
+      routes/
+      utils/
+    index.js
+  render.yaml
+```
 
-### 💡 **Key Features**
-* **🔒 Secure Authentication:** Users can log in with email/password or Google authentication, ensuring secure data access.
-* **📑 Detailed Job Information:** Job listings come with detailed descriptions, requirements, and other essential job-related information.
-* **🎯 Job Search Filters:** Quickly filter job listings based on specific criteria such as location, title, and posting time.
-* **🧭 Easy Navigation:** Pagination for job listings ensures the user can explore a large number of opportunities without overwhelming the interface.
-* **📱 Mobile-Friendly UI:** Responsive design to ensure the website is easy to use across all devices, whether on desktop or mobile.
+## 2) Local Setup
 
-## 🎯 **Ideal For**
+### Backend
 
-* **👨‍💼 Job Seekers:** Individuals looking to find job opportunities with ease and manage their job applications.
-* **🏢 Employers & Recruiters:** Companies or recruiters seeking an efficient platform to post job listings and manage applicants.
-* **🧑‍💼 Admins:** Admins looking to manage job listings, users, and queries to ensure a smooth-running platform.
-* **🌍 Anyone:** Looking to either find job opportunities or post job openings on a reliable platform.
+```bash
+cd job-portal-server
+npm install
+cp .env.example .env
+npm run dev
+```
 
-## ⚙️ **Technologies Used**
+### Frontend
 
-**Frontend:**  
-* ⚛️ **React.js**  
-* 🎨 **CSS3**  
-* 💻 **Bootstrap**  
-* ⚙️ **JavaScript**  
-* 🧑‍💻 **Axios** for API calls
+```bash
+cd job-portal-client
+npm install
+cp .env.example .env
+npm run dev
+```
 
-**Backend:**  
-* 🖥️ **Node.js**  
-* 🖧 **Express.js**  
+Frontend default dev URL: `http://localhost:5173`  
+Backend default dev URL: `http://localhost:3000`
 
-**Database:**  
-* 🗄️ **MongoDB** (NoSQL Database)
+## 3) Environment Variables
 
-**Authentication:**  
-* 🔐 **Firebase Authentication** (For Google login)
+### Backend (`job-portal-server/.env`)
 
-## ⚙️ **How to Run**
+```env
+PORT=3000
+MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/job_portal?retryWrites=true&w=majority
+CLIENT_URL=http://localhost:5173
+CLERK_SECRET_KEY=
+CLERK_ISSUER=
+```
 
-1. **📂 Clone the repository:**  
-   `git clone <repository_url>`
+Notes:
+- `CLERK_SECRET_KEY` comes from Clerk dashboard.
+- `CLERK_ISSUER` is optional. Leave empty to auto-detect from token.
 
-2. **🖥️ Navigate to the directory:**  
-   `cd JobJunction`
+### Frontend (`job-portal-client/.env`)
 
-3. **🔧 Install the backend dependencies:**  
-   Navigate to the backend directory and install dependencies:
-   `cd backend && npm install`
+```env
+VITE_API_URL=http://localhost:3000
+VITE_CLERK_PUBLISHABLE_KEY=
+```
 
-4. **🔧 Install the frontend dependencies:**  
-   Navigate to the frontend directory and install dependencies:
-   `cd frontend && npm install`
+## 4) Role Model
 
-5. **⚙️ Set up environment variables:**  
-   Add your environment variables for Firebase and MongoDB in `.env` files for both the frontend and backend.
+- `jobProvider` -> can post/edit/delete jobs and view own job applications.
+- `jobSeeker` -> can apply to jobs.
 
-6. **🚀 Run the application:**  
-   Run the backend and frontend servers:
+On first sign-in, users are redirected to `/select-role`.
 
-   - **Backend:**  
-     `npm start` (from the `backend` directory)
+## 5) MongoDB Atlas Free Setup (M0 only)
 
-   - **Frontend:**  
-     `npm start` (from the `frontend` directory)
+1. Create Atlas account.
+2. Create a **Free cluster** (M0).
+3. Create database user (username/password).
+4. Add IP access rule:
+   - Development: your current IP
+   - Deployment: `0.0.0.0/0` (common for hobby projects; use strong password)
+5. Get connection string and set `MONGODB_URI` in backend env.
 
-7. **🌐 Open the application:**  
-   Open the app in your browser at `http://localhost:3000`.
+## 6) Clerk Free Setup (Auth)
 
----
+1. Create a Clerk account.
+2. Create an application (free tier).
+3. Copy:
+   - Publishable key -> frontend `VITE_CLERK_PUBLISHABLE_KEY`
+   - Secret key -> backend `CLERK_SECRET_KEY`
+4. Add your local/dev and deployed URLs in Clerk allowed origins/redirects.
 
-**JobJunction** is a powerful job portal platform that empowers both job seekers and employers to connect seamlessly, offering a modern approach to job searching and management. It's a comprehensive, secure, and easy-to-use solution for the job market today! 💼🚀
+## 7) Deploy Backend on Render (Free Web Service)
 
-![Website Look](https://github.com/LakshayD02/MERN_Job_Portal_Website/blob/main/Output-1.png)
-![Website Look](https://github.com/LakshayD02/MERN_Job_Portal_Website/blob/main/Output-5.png)
+1. Push repo to GitHub.
+2. In Render: `New` -> `Web Service`.
+3. Select repo and configure:
+   - Root Directory: `job-portal-server`
+   - Build Command: `npm install`
+   - Start Command: `npm start`
+   - Instance Type: `Free`
+4. Add env vars in Render dashboard:
+   - `PORT`
+   - `MONGODB_URI`
+   - `CLIENT_URL`
+   - `CLERK_SECRET_KEY`
+   - `CLERK_ISSUER` (optional)
+5. Deploy and verify `/api/health`.
+
+## 8) Deploy Frontend on Vercel (Hobby)
+
+1. Import repository in Vercel.
+2. Set project root to `job-portal-client`.
+3. Add env vars:
+   - `VITE_API_URL`
+   - `VITE_CLERK_PUBLISHABLE_KEY`
+4. Deploy on Hobby plan.
+
+## 9) API Summary
+
+Base URL: `/api`
+
+- Public:
+  - `GET /api/health`
+  - `GET /api/jobs`
+  - `GET /api/jobs/:id`
+- Provider-only:
+  - `POST /api/jobs`
+  - `PATCH /api/jobs/:id`
+  - `DELETE /api/jobs/:id`
+  - `GET /api/jobs/my/:email`
+  - `GET /api/jobs/:id/applications`
+- Seeker-only:
+  - `POST /api/jobs/:id/apply`
+  - `GET /api/applications/my/:email`
+
+## 10) Notes
+
+- `node_modules` are ignored and not tracked.
+- Backend production start uses `node index.js`.
+- Frontend API calls use `VITE_API_URL` and send Clerk bearer token automatically.

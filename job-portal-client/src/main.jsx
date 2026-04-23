@@ -1,9 +1,1 @@
-
-import ReactDOM from 'react-dom/client'
-import './index.css'
-import { RouterProvider } from 'react-router-dom'
-import router from './Router/Router.jsx'
-
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router} />,
-)
+import ReactDOM from "react-dom/client";import { ClerkProvider } from "@clerk/clerk-react";import { RouterProvider } from "react-router-dom";import router from "./Router/Router.jsx";import "./index.css";const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;if (!clerkPubKey) {  throw new Error("Missing VITE_CLERK_PUBLISHABLE_KEY in frontend environment variables");}ReactDOM.createRoot(document.getElementById("root")).render(  <ClerkProvider publishableKey={clerkPubKey}>    <RouterProvider router={router} />  </ClerkProvider>);

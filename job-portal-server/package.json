@@ -1,20 +1,27 @@
 {
   "name": "job-portal-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Job portal backend API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "start": "node index.js"
   },
-  "keywords": [],
+  "keywords": [
+    "mern",
+    "express",
+    "mongoose"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "mongodb": "^6.7.0",
+    "jose": "^6.2.2",
+    "mongoose": "^8.6.1"
+  },
+  "devDependencies": {
     "nodemon": "^3.1.3"
   }
 }

@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: job-portal-api
+    runtime: node
+    rootDir: job-portal-server
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: PORT
+        value: 10000
+      - key: MONGODB_URI
+        sync: false
+      - key: CLIENT_URL
+        sync: false
